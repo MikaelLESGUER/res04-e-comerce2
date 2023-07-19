@@ -1,13 +1,18 @@
 <?php 
-if(isset($_GET["route"])){
-    $route = $_GET["route"];
+
+function checkRoute($route)
+{
+    $userController = new UserController();
+    $product_CategoryController = new Product_CategoryController();
+    $orderController = new OrderController();
+    
     if($route === "user-register")
     {
         $userController->register();
     }
     else if($route === "user-login" )
     {
-         $userController->login();
+        $userController->login();
     }
     else if($route === "user-logout" )
     {
@@ -27,15 +32,6 @@ if(isset($_GET["route"])){
     }
     else if($route === "")
     {
-        
+        $userController->login();
     }
-    else if($route === "")
-    {
-        
-    }
-}
-else
-{
-    $userController->login();
-   /* echo "404 : Page Not Found";*/
 }

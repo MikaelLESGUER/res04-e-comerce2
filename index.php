@@ -1,13 +1,13 @@
 <?php
     session_start();
     
+    require "core/router.php";
     
-    
-     require "entities/Address.php";
-     require "entities/Order.php";
-     require "entities/Product.php";
-     require "entities/Product_Category.php";
-     require "entities/User.php";
+    require "entities/Address.php";
+    require "entities/Order.php";
+    require "entities/Product.php";
+    require "entities/Product_Category.php";
+    require "entities/User.php";
      
     require "managers/AbstractManager.php";
     require "managers/UserManager.php";
@@ -23,10 +23,11 @@
     require "controllers/UserController.php";
     require "controllers/AddressController.php";
     
-    
-    $userController = new UserController();
-    $product_CategoryController = new Product_CategoryController();
-    $orderController = new OrderController();
-    require "core/router.php";
+    if(isset($_GET["route"])){
+        checkRoute($_GET["route"]);
+    }
+    else{
+        checkRoute("");
+    }
     
 ?>
