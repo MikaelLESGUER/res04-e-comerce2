@@ -1,0 +1,20 @@
+<h1>Liste de vos commandes</h1>
+<form action="index.php?route=user-past-orders" method="POST">
+<h2>Vos commandes</h2>
+<?php $orders_list = $data ?>
+
+<?php foreach($orders_list as $order)
+{
+  
+?>
+<ul>
+    <li>
+        Commande du <?= $order->getOrder_date(); ?>
+        <!--ajouter php pour afficher adresse dans $orders_list -->
+    </li>
+</ul>
+<?php
+}
+?>
+    
+</form>

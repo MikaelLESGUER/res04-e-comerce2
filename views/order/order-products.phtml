@@ -1,0 +1,86 @@
+<!--
+$data :: ARRAY
+// $data keys -> 'categories' 'products' (?)'category_selected'
+// (?) <=> peut être null
+-->
+
+<section class="container" aria-labelledby="title-products">
+   <h2 id="title-products">Produits</h2>
+   <aside>
+      <h3>Catégories</h3>
+      <nav> <!-- choix de la catgorie de produit -->
+         <ul>
+            <li><a href="?route=order-products">Toutes</a></li>
+            <?php foreach ($data['categories'] as $cat) { ?>
+               <li>
+                  <?php $select = '';
+                     if ($data['category_selected'] !== "") {
+                        if ($cat->getId() === $data['category_selected']) {
+                           $select = 'select';  
+                        }else { $select = ''; }
+                  }?>
+                  <a href="?route=order-products&category_id=<?= $cat->getId(); ?>" class="<?= $select ?>">
+                     <?= $cat->getName(); ?>
+                  </a>
+               </li>
+            <?php } ?>
+         </ul>
+      </nav>
+   </aside>
+   <section aria-labelledby="title-cat">
+      <?php 
+      $title_cat = 'Tous';
+      if($data['category_selected'] !== '') 
+      { 
+         $title_cat = $data['category_selected']->getName(); 
+         
+      } ?>
+      <h3 id="title-cat">dans <?= $title_cat ?></h3>
+      <div id="products">
+         <ul>
+            <?php foreach ($data['products'] as $product) { ?>
+               <li>
+                  <article class="product-card">
+                     <div>
+                        <img src="<?= $product->getImage(); ?>" alt="image de <?= $product->getName(); ?>">
+                        <h3><?= $product->getName(); ?></h3>
+                        <p class="">
+                           <?= $product->getDescription(); ?>
+                        </p>
+                        <b class="price">
+                           <?= $product->getPrice(); ?>
+                        </b>
+                     </div>
+                     <input type="checkbox" name="<?= $product->getName() ?>" id="<?= $product->getId(); ?>">
+                  </article>
+               </li>
+            <?php } ?>
+         </ul>
+      </div>
+   </section>
+
+   <!-- order creation form -->
+   <form action="?route=order-create" method="POST" aria-label="" id="order-create">
+      <section aria-labelledby="title-cart">
+         <h3 id="title-cart">Panier</h3>
+         <ul id="cart">
+
+         </ul>
+      </section>
+      <div>
+         <h3>Adresse de livraison</h3>
+         <div class="d-flex gap-2">
+            <label for="address_code_postal" class="visually-hidden">Code postal</label>
+            <input class="form-control" type="number" name="address_code_postal" value="" placeholder="Code postal" id="address_code_postal">
+            <label for="address_pays" class="visually-hidden">Pays</label>
+            <input class="form-control" type="text" name="address_pays" value="" placeholder="France" id="address_pays">
+         </div>
+         <label for="address_details"></label>
+         <textarea class="form-control" type="text" 
+                  name="address_details" value="" 
+                  placeholder="Ex: 1 rue Dufour" id="address_details">
+         </textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Valider la commande</button>
+   </form>
+</section>

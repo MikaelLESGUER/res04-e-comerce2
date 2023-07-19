@@ -1,0 +1,17 @@
+<!--PAS UTILISE-->
+<form method="POST" action="index.php?route="> <!--vers où ?? pierre à fait la liste des produits-->
+    <input type="hidden" name="formName" value="getProductCategory"/> <!--faire l'ajout du recup de l'id dans le produt manager-->
+    <label for="category_list">Quelle catégorie ?</label>
+    <select name="category_list">
+        <?php
+            $categories = $data;
+            foreach($categories as $categorie)
+            {
+                ?>
+                <option value="<?= $categorie['id']; ?>"> <?= $categorie['name']; ?> </option>
+                <?php
+            }
+        ?>
+    </select>
+    <input type="submit" value="Submit"/>
+</form>
