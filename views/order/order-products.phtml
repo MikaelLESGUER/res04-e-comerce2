@@ -1,6 +1,6 @@
 <!--
-$data :: ARRAY
-// $data keys -> 'categories' 'products' (?)'category_selected'
+$this->data :: ARRAY
+// $this->data keys -> 'categories' 'products' (?)'category_selected'
 // (?) <=> peut être null
 -->
 
@@ -11,11 +11,11 @@ $data :: ARRAY
       <nav> <!-- choix de la catgorie de produit -->
          <ul>
             <li><a href="?route=order-products">Toutes</a></li>
-            <?php foreach ($data['categories'] as $cat) { ?>
+            <?php foreach ($this->data['categories'] as $cat) { ?>
                <li>
                   <?php $select = '';
-                     if ($data['category_selected'] !== "") {
-                        if ($cat->getId() === $data['category_selected']) {
+                     if ($this->data['category_selected'] !== "") {
+                        if ($cat->getId() === $this->data['category_selected']) {
                            $select = 'select';  
                         }else { $select = ''; }
                   }?>
@@ -30,15 +30,15 @@ $data :: ARRAY
    <section aria-labelledby="title-cat">
       <?php 
       $title_cat = 'Tous';
-      if($data['category_selected'] !== '') 
+      if($this->data['category_selected'] !== '') 
       { 
-         $title_cat = $data['category_selected']->getName(); 
+         $title_cat = $this->data['category_selected']->getName(); 
          
       } ?>
       <h3 id="title-cat">dans <?= $title_cat ?></h3>
       <div id="products">
          <ul>
-            <?php foreach ($data['products'] as $product) { ?>
+            <?php foreach ($this->data['products'] as $product) { ?>
                <li>
                   <article class="product-card">
                      <div>
