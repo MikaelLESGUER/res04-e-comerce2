@@ -22,6 +22,7 @@
     require "controllers/ProductController.php";
     require "controllers/UserController.php";
     require "controllers/AddressController.php";
+    require "controllers/AccountController.php";
     
     if(isset($_GET["route"])){
         checkRoute($_GET["route"]);

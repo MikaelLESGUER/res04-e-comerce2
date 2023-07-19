@@ -5,6 +5,7 @@ function checkRoute($route)
     $userController = new UserController();
     $product_CategoryController = new Product_CategoryController();
     $orderController = new OrderController();
+    $accountController = new AccountController();
     
     if($route === "user-register")
     {
@@ -29,6 +30,10 @@ function checkRoute($route)
     else if($route === "order-create")
     {
         $orderController->create();
+    }
+    else if($route === "user-account")
+    {
+        $accountController->displayAccount();
     }
     else if($route === "")
     {

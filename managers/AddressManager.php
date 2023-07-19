@@ -3,7 +3,7 @@
   class AddressManager
   {
       
-     public function getAddressById(int $id) : Address{
+     public function getAddressByUserId(int $user_id) : Address{
          
          $query = $this->db->prepare("
             SELECT * 
@@ -12,7 +12,7 @@
          ");
          $parameters = 
          [
-            "id"=>$id         
+            "id"=>$user_id         
          ];
          $query->execute($parameters);
          $result = $query->fetch(PDO::FETCH_ASSOC);
