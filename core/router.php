@@ -24,7 +24,7 @@ function checkRoute($route)
     }
     else if($route === "user-past-orders" )
     {
-        $orderController->getOrdersByUser_id();
+        $orderController->getOrdersByUserId();
     }
     else if($route === "order-create")
     {
