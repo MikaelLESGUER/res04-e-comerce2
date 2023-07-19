@@ -19,7 +19,7 @@ abstract class AbstractManager
         $this->password = "04646b679a4ab0a202f8007ea81fe675";
 
         $this->db = new PDO(
-            "mysql:host=$this->host;port=$this->port;dbname=$this->dbName",
+            "mysql:host=$this->host;port=$this->port;charset=utf8;dbname=$this->dbName",
             $this->username,
             $this->password
         );
