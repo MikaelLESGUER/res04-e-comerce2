@@ -12,11 +12,11 @@ abstract class AbstractManager
 
     public function __construct()
     {
-        $this->dbName = "blanchepeltier_e-commerce";
+        $this->dbName = "kevincorvaisier_e-commerce";
         $this->port = "3306";
         $this->host = "db.3wa.io";
-        $this->username = "blanchepeltier";
-        $this->password = "6df6213ed1bccc46589270829cdb7338";
+        $this->username = "kevincorvaisier";
+        $this->password = "04646b679a4ab0a202f8007ea81fe675";
 
         $this->db = new PDO(
             "mysql:host=$this->host;port=$this->port;dbname=$this->dbName",
