@@ -50,6 +50,7 @@
             }
             header("Location:index.php?route=order-products");
             exit();
+        }
 
         public function getListOrdersByUser ()
         {
@@ -60,7 +61,7 @@
                 foreach($past_orders as $order)
                 {
                     $orders_address = $this->addressManager->getAddressById($order->getAddress_id());
-                    $orders_list[] = "order" => $order, "adresse" => $order_address;
+                    $orders_list = ["order" => $order, "adresse" => $order_address];
                     //pas sûre que ça fonctionne mais l'idée c'est de récuérer les commandes et leur adresses et les stocker dans $data pour pouvoir les afficher sur read-past-orders.phtml
                 }
                 $this->render("user/read-past-orders", $orders_list);
