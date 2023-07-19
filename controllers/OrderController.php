@@ -1,6 +1,4 @@
 <?php
-
-    require_once "AbstractController.php";
   
     class OrderController extends AbstractController
     {
@@ -13,12 +11,12 @@
             $this->addressManager = new AddressManager();
         }
         
-        public function getOrdersByUser_id ()
+        public function getOrdersByUserId () //: Order
         {
             if(isset($_SESSION["user_id"]))
             {
-                $past_orders = $this->orderManager->getOrdersByUser_id($_SESSION["user_id"]);
-                $this->render("user/read-past-orders", $past_orders);
+                $past_orders = $this->orderManager->getOrdersByUserId($_SESSION["user_id"]);
+                $this->render("user/read-past-orders.phtml", $past_orders);
             }
             else
             {
@@ -64,7 +62,7 @@
                     $orders_list = ["order" => $order, "adresse" => $order_address];
                     //pas sûre que ça fonctionne mais l'idée c'est de récuérer les commandes et leur adresses et les stocker dans $data pour pouvoir les afficher sur read-past-orders.phtml
                 }
-                $this->render("user/read-past-orders", $orders_list);
+                $this->render("user/read-past-orders.phtml", $orders_list);
             }
             else
             {

@@ -3,10 +3,14 @@
 
 abstract class AbstractController
 {
+   protected $template;
+   protected $data;
+   
    public function render(string $view, array $values): void
    {
-      $template = $view;
-      $data = $values;
+      $this->template = $view;
+      $this->data = $values;
+      
       require 'views/layout.phtml';
    }
 }

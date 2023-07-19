@@ -1,7 +1,9 @@
 <?php
 
 class OrderManager extends AbstractManager {
-	public function getOrderById(int $id) : Order {
+	
+	public function getOrderById(int $id) : Order 
+	{
 		$query = $this->db->prepare('
 			SELECT * FROM orders WHERE id = :id
 		');
@@ -13,7 +15,9 @@ class OrderManager extends AbstractManager {
 		$order = Order::createInstanceFromAssoc($result);
 		return $order;
 	}
-	public function getOrdersByUser_id(int $user_id) : array {
+	
+	public function getOrdersByUser_id(int $user_id) : array 
+	{
 		$query = $this->db->prepare('
 			SELECT * FROM orders WHERE user_id = :user_id
 		');
@@ -27,7 +31,9 @@ class OrderManager extends AbstractManager {
 		
 		return $orders;
 	}
-	public function getOrdersByAddress_id(int $address_id) : array {
+	
+	public function getOrdersByAddress_id(int $address_id) : array 
+	{
 		$query = $this->db->prepare('
 			SELECT * FROM orders WHERE address_id = :address_id
 		');
@@ -40,7 +46,8 @@ class OrderManager extends AbstractManager {
 		return $orders;
 	}
 
-	public function getLastOrdersSortedByOrder_date(int $n = 10) : array {
+	public function getLastOrdersSortedByOrder_date(int $n = 10) : array 
+	{
 		$query = $this->db->prepare('
 			SELECT * FROM orders 
 			ORDER BY order_date DESC 
@@ -54,7 +61,9 @@ class OrderManager extends AbstractManager {
 		$orders = Order::createInstancesArrFromAssocArr($results);
 		return $orders;
 	}
-	public function addOrder(Order $order) : Order {
+	
+	public function addOrder(Order $order) : Order 
+	{
 		$query = $this->db->prepare('
 			INSERT INTO orders (user_id, order_date, address_id)
 			VALUES (:user_id, :order_date, :address_id)
@@ -68,7 +77,9 @@ class OrderManager extends AbstractManager {
 		$order = $this->getLastOrdersSortedByOrder_date(1)[0]; //récupère le dernier order effectué, donc celui quon vient de faire
 		return $order;
 	}
-	public function addOrder_ProductRelation(int $order_id, int $product_id) {
+	
+	public function addOrder_ProductRelation(int $order_id, int $product_id) 
+	{
 		$query = $this->db->prepare('
 			INSERT INTO order_products (order_id, product_id)
 			VALUES (:order_id, :product_id)

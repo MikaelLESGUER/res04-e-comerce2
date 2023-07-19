@@ -1,12 +1,9 @@
 <?php
-
-  require_once "AbstractController.php";
   
 class UserController extends AbstractController
 {
     private UserManager $userManager;
     
-
     public function __construct()
     {
         $this->userManager = new UserManager();
@@ -22,11 +19,11 @@ class UserController extends AbstractController
                 header("Location:index.php?route=order-products");
             } else {
                 $allUsers = $this->userManager->getAllUsers();
-                $this->render('user/login', ["users" => $allUsers]);
+                $this->render('user/login.phtml', ["users" => $allUsers]);
             }
         } else {
             $allUsers = $this->userManager->getAllUsers();
-            $this->render('user/login', ["users" => $allUsers]);
+            $this->render('user/login.phtml', ["users" => $allUsers]);
         }
     }
 
@@ -49,11 +46,11 @@ class UserController extends AbstractController
                     
                     header("Location:index.php?route=user-login");
                 } else {
-                    $this->render('user/register', []);
+                    $this->render('user/register.phtml', []);
                 }
             }
         } else {
-            $this->render('user/register', []);
+            $this->render('user/register.phtml', []);
         }
     }
     public function logout(): void

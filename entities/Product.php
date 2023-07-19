@@ -64,11 +64,11 @@
             $this->image = $image;
         }
         
-        public function getCategory_id () : int
+        public function getCategoryId () : int
         {
             return $this->category_id;
         }
-        public function setCategory_id (int $category_id) : void
+        public function setCategoryId (int $category_id) : void
         {
             $this->category_id = $category_id;
         }

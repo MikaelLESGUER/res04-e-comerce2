@@ -1,11 +1,13 @@
 <?php
 
 class Address {
+   
    private ?int $id;
    private string $pays;
    private string $address;
    private int $code_postal;
-   public function __construct($pays,$address,$code_postal) {
+   
+   public function __construct(string $pays, string $address, int $code_postal) {
       $this->pays = $pays;
       $this->address = $address;
       $this->code_postal = $code_postal;
@@ -27,13 +29,13 @@ class Address {
    public function setId(int $id) : void {
 		$this->id = $id;
 	}
-   public function setUser_id(string $pays) : void {
+   public function setUserId(string $pays) : void {
       $this->pays = $pays;
    }
    public function setAddress(string $address) : void {
       $this->address = $address;
    }
-   public function setCode_postal(int $code_postal) : void {
+   public function setCodePostal(int $code_postal) : void {
       $this->code_postal = $code_postal;
    }
 }

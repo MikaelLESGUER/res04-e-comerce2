@@ -1,7 +1,5 @@
 <?php
     
-    require_once "AbstractController.php";
-    
     class ProductController extends AbstractController
     {
         public function getProductsByCategory ()
