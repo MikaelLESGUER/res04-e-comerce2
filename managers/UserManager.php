@@ -13,6 +13,8 @@
 		foreach($users as $user) {
          $userInstance = new User(
             $user['username'],
+            $user['first_name'],
+            $user['last_name'],
             $user['email'],
             $user['password']
          );
@@ -30,6 +32,8 @@
 		$user = $query->fetch(PDO::FETCH_ASSOC);
 		$userInstance = new User(
          $user['username'],
+         $user['first_name'],
+         $user['last_name'],
          $user['email'],
          $user['password']
       );
@@ -45,6 +49,8 @@
 		$user = $query->fetch(PDO::FETCH_ASSOC);
 		$userInstance = new User(
          $user['username'],
+         $user['first_name'],
+         $user['last_name'],
          $user['email'],
          $user['password']
       );
@@ -53,12 +59,14 @@
 	}
    public function insertUser(User $user) : User {
       $query = $this->db->prepare('
-			INSERT INTO users (username, email,  password)
-			VALUES (:username, :email,  :password)
+			INSERT INTO users (username, first_name, last_name, email,  password)
+			VALUES (:username, :first_name, :last_name, :email,  :password)
 		');
 		$parameters = [
 		   
 		   'username' => $user->getUsername(),
+		   'first_name' => $user->getFirstName(),
+		   'last_name' => $user->getLastName(),
 			'email' => $user->getEmail(),
 			'password' => password_hash($user->getPassword(),PASSWORD_DEFAULT)
 		];
