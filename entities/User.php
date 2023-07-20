@@ -23,6 +23,12 @@ class User
     {
         return $this->id;
     }
+    
+        
+    public function setId(?int $id) : void
+    {
+        $this->id = $id;
+    }
 
     public function getUsername(): string
     {
@@ -42,22 +48,17 @@ class User
         $this->first_name = $name;
     }
     
-        public function setLastName(string $name): void {
+    public function setLastName(string $name): void {
         $this->last_name = $name;
     }
     
-    public function getPassword(): string {
-        return $this->password;
+    public function getLastName(): string {
+        return $this->last_name;
     }
     
     public function getEmail(): string
     {
         return $this->email;
-    }
-    
-    public function setId(?int $id) : void
-    {
-        $this->id = $id;
     }
     
     public function setEmail(string $email): void
