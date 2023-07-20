@@ -39,6 +39,10 @@ function checkRoute($route)
     {
         $accountController->addAddress();
     }
+    else if($route === "reset-mdp")
+    {
+        $accountController->resetMDP();
+    }
     else{
         $userController->login();
     }
