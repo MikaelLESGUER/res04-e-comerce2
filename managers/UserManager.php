@@ -89,10 +89,10 @@
    {
       $query = $this->db->prepare('UPDATE users SET password = :password WHERE id = :id');
       $parameters = [
-         'password' => $user->getPassword(),
+         'password' => password_hash($user->getPassword(),PASSWORD_DEFAULT),
          'id' => $user->getId()
          ];
-         $query->execute($paremeters);
+         $query->execute($parameters);
    }
    
 }

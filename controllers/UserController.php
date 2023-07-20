@@ -80,11 +80,14 @@ class UserController extends AbstractController
     {
         if(isset($_POST["nouveauMotDePasse"], $_POST["confirmationMotDePasse"]))
         {
-            $user = $userManager->getUserById($_SESSION["user_id"]);
+            $user = $this->userManager->getUserById($_SESSION["user_id"]);
             $user->setPassword($_POST["nouveauMotDePasse"]);
-            
             $this->userManager->updateUser($user);
             $this->render("views/user/account.phtml", ["message" => "Mot de passe modifié!"]);
+        }
+        else
+        {
+            $this->render("views/user/account.phtml", []);
         }
     }
     

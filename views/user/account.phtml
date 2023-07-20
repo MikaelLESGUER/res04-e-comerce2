@@ -1,17 +1,23 @@
+<?php
+
+$orders = $this->data["orders"];
+
+?>
+
 
 <head>
     <title>Mon compte utilisateur</title>
 </head>
 
 <h1>Mon compte</h1>
+    <span class="advert"><?php
+        if(isset($this->data["message"]))
+        {
+            echo $this->data["message"];
+        }
+    ?></span>
 
     <h2>Formulaire d'adresse</h2>
-    <span class="advert"><?php
-    if(isset($this->data["message"]))
-    {
-        echo $this->data["message"];
-    }
-    ?></span>
     <form action="index.php?route=add-address" method="POST">
 
         <label for="adresse">Adresse :</label>
@@ -30,7 +36,7 @@
     </form>
     
     <h2>Réinitialisation du mot de passe</h2>
-    <form action="index?route=reset-mdp" method="POST">
+    <form action="index.php?route=reset-mdp" method="POST">
         <label for="nouveauMotDePasse">Nouveau mot de passe :</label>
         <input type="password" id="nouveauMotDePasse" name="nouveauMotDePasse" required><br><br>
 
@@ -52,8 +58,12 @@
             </thead>
             <tbody>
                 <?php
-                
-                
+                    foreach($orders as $order)
+                    {
+                    ?>
+                        
+                    <?php
+                    }
                 ?>
             </tbody>
         </table>

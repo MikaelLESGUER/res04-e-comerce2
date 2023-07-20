@@ -21,7 +21,6 @@
     require "controllers/Product_CategoryController.php";
     require "controllers/ProductController.php";
     require "controllers/UserController.php";
-    require "controllers/AddressController.php";
     require "controllers/AccountController.php";
     
     if(isset($_GET["route"])){

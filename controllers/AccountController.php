@@ -4,6 +4,7 @@ class AccountController extends AbstractController
 {
     private UserManager $userManager;
     private OrderManager $orderManager;
+    //private ProductManager $productManager;
     private AddressManager $addressManager;
 
     public function __construct()
@@ -11,6 +12,7 @@ class AccountController extends AbstractController
         $this->userManager = new UserManager();
         $this->orderManager = new OrderManager();
         $this->addressManager = new AddressManager();
+        //$this->productManager = new ProductManager();
     }
     
     public function displayAccount()
@@ -18,11 +20,12 @@ class AccountController extends AbstractController
         $user = $this->userManager->getUserById($_SESSION["user_id"]);
         $orders = $this->orderManager->getOrdersByUserId($_SESSION["user_id"]);
         $address = $this->addressManager->getAddressByUserId($_SESSION["user_id"]);
-        
+        //$products = $this->productManager->getAddressByUserId($_SESSION["user_id"]);
         
         $this->render("views/user/account.phtml", [
             "user" => $user, 
             "orders" => $orders,
+            "products" => $products,
             "adress" => $address
             ]);
     }
@@ -37,15 +40,5 @@ class AccountController extends AbstractController
         }
     }
     
-    public function resetMDP()
-    {
-        if(isset($_POST["nouveauMotDePasse"], $_POST["confirmationMotDePasse"]))
-        {
-            $user = $userManager->getUserById($_SESSION["user_id"]);
-            $user->setPassword($_POST["nouveauMotDePasse"]);
-            
-            $this->userManager->updateUser($user);
-            $this->render("views/user/account.phtml", ["message" => "Mot de passe modifié!"]);
-        }
-    }
+    
 }
