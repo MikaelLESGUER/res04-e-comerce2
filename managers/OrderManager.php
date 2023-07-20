@@ -11,67 +11,28 @@ class OrderManager extends AbstractManager {
 			'id' => $id
 		];
 		$query->execute($parameters);
-		$result = $query->fetch(PDO::FETCH_ASSOC);
-		//a voir
-		return $order;
+		$order = $query->fetch(PDO::FETCH_ASSOC);
+		$orderInstance = new Order($order["user_id"], $order["order_date"], $order["amount"], $order["quantity"]);
+		return $orderInstance;
 	}
 	
-	public function getOrdersByUserId(int $id) : Order{
+	public function getOrdersByUserId(int $user_id) : array{
 		$query = $this->db->prepare('
 			SELECT * FROM orders WHERE user_id = :id
 		');
 		$parameters = [
-			'id' => $id
+			'id' => $user_id
 		];
 		$query->execute($parameters);
-		$result = $query->fetch(PDO::FETCH_ASSOC);
-		$order = new Order(); // class Order.php a revoir
-		return $order;
-	}
-	
-	public function getOrdersByUserId(int $user_id) : array 
-	{
-		$query = $this->db->prepare('
-			SELECT * FROM orders WHERE user_id = :user_id
-		');
-		$parameters = [
-			'user_id' => $user_id
-		];
-		$query->execute($parameters);
-		$results = $query->fetchAll(PDO::FETCH_ASSOC);
-		//a voir
+		$orders = $query->fetchAll(PDO::FETCH_ASSOC);
+		$ordersTab = [];
+		foreach($orders as $order)
+		{
+			$orderInstance = new Order($user_id, $order["order_date"], $order["amount"], $order["quantity"]);
+			array_push($orderTab, $orderInstance);
+		}
 		
-		return $orders;
-	}
-	
-	public function getOrdersByAddress_id(int $address_id) : array 
-	{
-		$query = $this->db->prepare('
-			SELECT * FROM orders WHERE address_id = :address_id
-		');
-		$parameters = [
-			'address_id' => $address_id
-		];
-		$query->execute($parameters);
-		$results = $query->fetchAll(PDO::FETCH_ASSOC);
-		//a voir
-		return $orders;
-	}
-
-	public function getLastOrdersSortedByOrder_date(int $n = 10) : array 
-	{
-		$query = $this->db->prepare('
-			SELECT * FROM orders 
-			ORDER BY order_date DESC 
-			LIMIT :n
-		');
-		$parameters = [
-			'n' => $n
-		];
-		$query->execute($parameters);
-		$results = $query->fetchAll(PDO::FETCH_ASSOC);
-		//a voir
-		return $orders;
+		return $orderTab;
 	}
 	
 	public function addOrder(Order $order)
