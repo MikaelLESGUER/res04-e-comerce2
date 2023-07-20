@@ -35,8 +35,11 @@ function checkRoute($route)
     {
         $accountController->displayAccount();
     }
-    else if($route === "")
+    else if($route === "add-address")
     {
+        $accountController->addAddress();
+    }
+    else{
         $userController->login();
     }
 }

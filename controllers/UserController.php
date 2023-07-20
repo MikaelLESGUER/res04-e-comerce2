@@ -12,16 +12,30 @@ class UserController extends AbstractController
 
     public function login()
     {
-        if (isset($_POST["email"], $_POST["password"])) {
+        if (isset($_POST["email"], $_POST["password"])) 
+        {
             $user = $this->userManager->getUserByEmail($_POST["email"]);
-            if (password_verify($_POST["password"], $user->getPassword())) {
-                $_SESSION['user_id'] = $user->getId();
-                header("Location:index.php?route=order-products");
-            } else {
+            if($user)
+            {
+                if (password_verify($_POST["password"], $user->getPassword())) 
+                {
+                    $_SESSION['user_id'] = $user->getId();
+                    header("Location:index.php?route=order-products");
+                } 
+                else 
+                {
+                    $allUsers = $this->userManager->getAllUsers();
+                    $this->render('user/login.phtml', ["users" => $allUsers]);
+                }
+            }
+            else
+            {
                 $allUsers = $this->userManager->getAllUsers();
                 $this->render('user/login.phtml', ["users" => $allUsers]);
             }
-        } else {
+        } 
+        else 
+        {
             $allUsers = $this->userManager->getAllUsers();
             $this->render('user/login.phtml', ["users" => $allUsers]);
         }

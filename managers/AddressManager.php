@@ -1,9 +1,9 @@
 <?php
-
-  class AddressManager
-  {
+    
+    class AddressManager extends AbstractManager
+    {
       
-     public function getAddressByUserId(int $user_id) : Address{
+     public function getAddressByUserId(int $user_id) : ? Address{
          
          $query = $this->db->prepare("
             SELECT * 
@@ -12,25 +12,48 @@
          ");
          $parameters = 
          [
-            "id"=>$user_id         
+            "id" => $user_id         
          ];
          $query->execute($parameters);
          $result = $query->fetch(PDO::FETCH_ASSOC);
          
-         $address = new Address(
+         if($result)
+         {
+             $address = new Address(
              $result["pays"],
              $result["address"],
-             $result["code_postal"]
+             $result["code_postal"],
+             $result["user_id"]
              );
-             
-         return $address;
+            return $address;
+         }
+         else
+         {
+            return null;
+         }
+         
      }
      
-      
+      public function insertAddress(Address $address) 
+      {
+      $query = $this->db->prepare('
+			INSERT INTO addresses (pays, address, code_postal, city, user_id)
+			VALUES (:pays, :address, :code_postal, :city, :user_id)
+		');
+		$parameters = [
+		   
+		   'pays' => $address->getPays(),
+		   'address' => $address->getAddress(),
+		   'code_postal' => $address->getCode_postal(),
+		   'city' => $address->getCity(),
+			'user_id' => $address->getUserId()
+		];
+		$query->execute($parameters);
+   }
       
   }
 
-// **********créer fonction createAddress()****************
+    
 
 
 ?>

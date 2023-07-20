@@ -15,10 +15,24 @@ class AccountController extends AbstractController
     
     public function displayAccount()
     {
+        $user = $this->userManager->getUserById($_SESSION["user_id"]);
+        $orders = $this->orderManager->getOrdersByUserId($_SESSION["user_id"]);
+        $address = $this->addressManager->getAddressByUserId($_SESSION["user_id"]);
+        
+        
         $this->render("views/user/account.phtml", [
-            "user" => $this->userManager->getUserById($_SESSION["user_id"]), 
-            "orders" => $this->orderManager->getOrdersByUserId($_SESSION["user_id"]),
-            "adress" => $this->adressManager->getAddressById($_SESSION["user_id"])
+            "user" => $user, 
+            "orders" => $orders,
+            "adress" => $address
             ]);
+    }
+    
+    public function addAddress()
+    {
+        if(isset($_POST["pays"], $_POST["adresse"], $_POST["codepostal"], $_POST["ville"]))
+        {
+            $address = new Address($_POST["pays"], $_POST["adresse"], $_POST["codepostal"], $_POST["ville"], $_SESSION["user_id"]);
+            $this->addressManager->insertAddress($address);
+        }
     }
 }

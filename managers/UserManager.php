@@ -40,23 +40,32 @@
       $userInstance->setId($user['id']);
       return $userInstance;
 	}
-   public function getUserByEmail(string $email) : User {
+	
+   public function getUserByEmail(string $email) : ? User {
 		$query = $this->db->prepare('SELECT * FROM users WHERE email = :email');
 		$parameters = [
 			'email' => $email
 		];
 		$query->execute($parameters);
 		$user = $query->fetch(PDO::FETCH_ASSOC);
-		$userInstance = new User(
+		if($user)
+		{
+		   $userInstance = new User(
          $user['username'],
          $user['first_name'],
          $user['last_name'],
          $user['email'],
          $user['password']
-      );
-      $userInstance->setId($user['id']);
-      return $userInstance;
+         );
+         $userInstance->setId($user['id']);
+         return $userInstance;
+		}
+		else{
+		   return null;
+		}
+		
 	}
+	
    public function insertUser(User $user) : User {
       $query = $this->db->prepare('
 			INSERT INTO users (username, first_name, last_name, email,  password)

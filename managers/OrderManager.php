@@ -16,7 +16,7 @@ class OrderManager extends AbstractManager {
 		return $order;
 	}
 	
-	public function getOrdersByUser_id(int $user_id) : array 
+	public function getOrdersByUserId(int $user_id) : array 
 	{
 		$query = $this->db->prepare('
 			SELECT * FROM orders WHERE user_id = :user_id
@@ -25,11 +25,15 @@ class OrderManager extends AbstractManager {
 			'user_id' => $user_id
 		];
 		$query->execute($parameters);
-		$results = $query->fetchAll(PDO::FETCH_ASSOC);
-		//peut etre ajouter une boucle pour passer dans array les infos de chaque objet ???
-		$orders = Order::createInstancesArrFromAssocArr($results);
+		$orders = $query->fetchAll(PDO::FETCH_ASSOC);
+		$ordersTab = [];
+		foreach($orders as $order)
+		{
+			$orderInstance = new Order($order["user_id"], $order["order_date"], $order["amount"], $order["quantity"]);
+			array_push($orderTab, $orderInstance);
+		}
 		
-		return $orders;
+		return $ordersTab;
 	}
 	
 	public function getOrdersByAddress_id(int $address_id) : array 
