@@ -2,7 +2,7 @@
 
 class OrderManager extends AbstractManager {
 	
-	public function getOrderById(int $id) : Order 
+	public function getOrderBy_id(int $id) : Order 
 	{
 		$query = $this->db->prepare('
 			SELECT * FROM orders WHERE id = :id
@@ -12,11 +12,24 @@ class OrderManager extends AbstractManager {
 		];
 		$query->execute($parameters);
 		$result = $query->fetch(PDO::FETCH_ASSOC);
-		$order = Order::createInstanceFromAssoc($result);
+		//a voir
 		return $order;
 	}
 	
-	public function getOrdersByUser_id(int $user_id) : array 
+	public function getOrdersByUserId(int $id) : Order{
+		$query = $this->db->prepare('
+			SELECT * FROM orders WHERE user_id = :id
+		');
+		$parameters = [
+			'id' => $id
+		];
+		$query->execute($parameters);
+		$result = $query->fetch(PDO::FETCH_ASSOC);
+		$order = new Order(); // class Order.php a revoir
+		return $order;
+	}
+	
+	public function getOrdersByUserId(int $user_id) : array 
 	{
 		$query = $this->db->prepare('
 			SELECT * FROM orders WHERE user_id = :user_id
@@ -26,8 +39,7 @@ class OrderManager extends AbstractManager {
 		];
 		$query->execute($parameters);
 		$results = $query->fetchAll(PDO::FETCH_ASSOC);
-		//peut etre ajouter une boucle pour passer dans array les infos de chaque objet ???
-		$orders = Order::createInstancesArrFromAssocArr($results);
+		//a voir
 		
 		return $orders;
 	}
@@ -42,7 +54,7 @@ class OrderManager extends AbstractManager {
 		];
 		$query->execute($parameters);
 		$results = $query->fetchAll(PDO::FETCH_ASSOC);
-		$orders = Order::createInstancesArrFromAssocArr($results);
+		//a voir
 		return $orders;
 	}
 
@@ -58,11 +70,11 @@ class OrderManager extends AbstractManager {
 		];
 		$query->execute($parameters);
 		$results = $query->fetchAll(PDO::FETCH_ASSOC);
-		$orders = Order::createInstancesArrFromAssocArr($results);
+		//a voir
 		return $orders;
 	}
 	
-	public function addOrder(Order $order) : Order 
+	public function addOrder(Order $order)
 	{
 		$query = $this->db->prepare('
 			INSERT INTO orders (user_id, order_date, address_id)
@@ -74,8 +86,6 @@ class OrderManager extends AbstractManager {
 				'address_id' => $order->getAddress_id()
 			];
 		$query->execute($parameters);
-		$order = $this->getLastOrdersSortedByOrder_date(1)[0]; //récupère le dernier order effectué, donc celui quon vient de faire
-		return $order;
 	}
 	
 	public function addOrder_ProductRelation(int $order_id, int $product_id) 

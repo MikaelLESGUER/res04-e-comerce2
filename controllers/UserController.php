@@ -14,13 +14,21 @@ class UserController extends AbstractController
     {
         if (isset($_POST["email"], $_POST["password"])) {
             $user = $this->userManager->getUserByEmail($_POST["email"]);
-            if (password_verify($_POST["password"], $user->getPassword())) {
-                $_SESSION['user_id'] = $user->getId();
-                header("Location:index.php?route=order-products");
-            } else {
-                $allUsers = $this->userManager->getAllUsers();
-                $this->render('user/login.phtml', ["users" => $allUsers]);
+            if($user != null)
+            {
+                if (password_verify($_POST["password"], $user->getPassword())) {
+                    $_SESSION['user_id'] = $user->getId();
+                    header("Location:index.php?route=order-products");
+                } else {
+                    $allUsers = $this->userManager->getAllUsers();
+                    $this->render('user/login.phtml', ["users" => $allUsers]);
+                }
             }
+            else
+            {
+                $this->render('user/register.phtml', []);
+            }
+            
         } else {
             $allUsers = $this->userManager->getAllUsers();
             $this->render('user/login.phtml', ["users" => $allUsers]);
@@ -35,8 +43,10 @@ class UserController extends AbstractController
                 $pwd = $_POST['password'];
                 $email = $_POST['email'];
                 $username = $_POST['username'];
+                $first_name = $_POST['first_name'];
+                $last_name = $_POST['last_name'];
                 
-                $user = new User($username, $email, $pwd);
+                $user = new User($username, $first_name, $last_name, $email, $pwd);
                 $this->userManager->insertUser($user);
                 
                 $this->render('user/login.phtml', []);

@@ -41,25 +41,5 @@ class Order {
 		$this->address_id = $address_id;
 	}
 	
-	
-	// static utility method from hell
-	// public static function createInstanceFromAssoc(array $assoc) : Order {
-	// 	$order = new Order(
-	// 		$assoc['user_id'],
-	// 		$assoc['order_date'],
-	// 		$assoc['address']
-	// 	);
-	// 	$order->setId($assoc['id']);
-	// 	return $order;
-	// }
-	// // another static utility from hell
-	// public static function createInstancesArrFromAssocArr(array $arr) : array {
-	// 	$orders = [];
-	// 	foreach($arr as $i) {
-	// 		$order = Order::createInstanceFromAssoc($i);
-	// 		array_push($orders,$order);
-	// 	}
-	// 	return $orders;
-	// }
 }
 
