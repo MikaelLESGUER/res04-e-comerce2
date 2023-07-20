@@ -85,5 +85,14 @@
       return $user;
    }
    
+   public function updateUser($user)
+   {
+      $query = $this->db->prepare('UPDATE users SET password = :password WHERE id = :id');
+      $parameters = [
+         'password' => $user->getPassword(),
+         'id' => $user->getId()
+         ];
+         $query->execute($paremeters);
+   }
    
 }
