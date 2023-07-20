@@ -3,12 +3,14 @@
 // avant d'essayer de récupérer des éléments du DOM sur la mauvaise page
 
 let products
-let productsButtons;
+let productsCheckboxes;
 let cart;
 
-function populateCart(productsInCart) {
+function populateCart(productsInCart)
+{
     cart.innerHTML = '';
-    productsInCart.forEach(product => {
+    productsInCart.forEach(product =>
+    {
         const li = document.createElement('li');
         li.innerText = product.name;
         cart.appendChild(li);
@@ -23,27 +25,40 @@ function populateCart(productsInCart) {
 
 
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () =>
+{
     products = document.getElementById('products');
-    productsButtons = products.querySelectorAll('input[type="submit"]');
+    productsCheckboxes = products.querySelectorAll('input[type="checkbox"]');
     cart = document.getElementById('cart');
     let productsInCart = [];
     const createOrderForm = document.querySelector('form#order-create');
 
-    productsButtons.forEach(productCheck => {
-        if (!productCheck.classList.contains("noJS")) {
-            productCheck.addEventListener('click', (e) => {
-
+    productsCheckboxes.forEach(productCheck =>
+    {
+        productCheck.addEventListener('change', (e) =>
+        {
+            if (e.target.checked)
+            {
                 const product = {
                     name: e.target.getAttribute('name'),
                     id: e.target.getAttribute('id')
                 };
                 productsInCart.push(product);
+                console.log(productsInCart)
                 populateCart(productsInCart);
-
-            })
-        }
-
+            }
+            else
+            {
+                const product = {
+                    name: e.target.getAttribute('name'),
+                    id: e.target.getAttribute('id')
+                };
+                let index = productsInCart.map(x => x.id).indexOf(product.id);
+                console.log(index)
+                productsInCart.splice(index, 1);
+                populateCart(productsInCart);
+            }
+        })
     })
 
 })

@@ -13,8 +13,6 @@
 		foreach($users as $user) {
          $userInstance = new User(
             $user['username'],
-            $user['first_name'],
-            $user['last_name'],
             $user['email'],
             $user['password']
          );
@@ -32,44 +30,35 @@
 		$user = $query->fetch(PDO::FETCH_ASSOC);
 		$userInstance = new User(
          $user['username'],
-         $user['first_name'],
-         $user['last_name'],
          $user['email'],
          $user['password']
       );
       $userInstance->setId($user['id']);
       return $userInstance;
 	}
-   public function getUserByEmail(string $email) : ? User {
+   public function getUserByEmail(string $email) : User {
 		$query = $this->db->prepare('SELECT * FROM users WHERE email = :email');
 		$parameters = [
 			'email' => $email
 		];
 		$query->execute($parameters);
 		$user = $query->fetch(PDO::FETCH_ASSOC);
-		if($user){
-		   $userInstance = new User(
-            $user['username'],
-            $user['first_name'],
-            $user['last_name'],
-            $user['email'],
-            $user['password']
-         );
-         $userInstance->setId($user['id']);
-         return $userInstance;
-		}
-		return null;
+		$userInstance = new User(
+         $user['username'],
+         $user['email'],
+         $user['password']
+      );
+      $userInstance->setId($user['id']);
+      return $userInstance;
 	}
    public function insertUser(User $user) : User {
       $query = $this->db->prepare('
-			INSERT INTO users (username, first_name, last_name, email,  password)
-			VALUES (:username, :first_name, :last_name, :email,  :password)
+			INSERT INTO users (username, email,  password)
+			VALUES (:username, :email,  :password)
 		');
 		$parameters = [
 		   
 		   'username' => $user->getUsername(),
-		   'first_name' => $user->getFirstName(),
-		   'last_name' => $user->getLastName(),
 			'email' => $user->getEmail(),
 			'password' => password_hash($user->getPassword(),PASSWORD_DEFAULT)
 		];

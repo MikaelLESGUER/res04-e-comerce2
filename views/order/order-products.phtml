@@ -1,63 +1,57 @@
-<!--
-$this->data :: ARRAY
-// $this->data keys -> 'categories' 'products' (?)'category_selected'
-// (?) <=> peut être null
--->
-
 <section class="container" aria-labelledby="title-products">
-   <h2 id="title-products">Produits</h2>
-   <aside>
-      <h3>Catégories</h3>
-      <nav> <!-- choix de la catgorie de produit -->
-         <ul>
-            <li><a href="?route=order-products">Toutes</a></li>
-            <?php foreach ($this->data['categories'] as $cat) { ?>
-               <li>
-                  <?php $select = '';
-                     if ($this->data['category_selected'] !== "") {
-                        if ($cat->getId() === $this->data['category_selected']) {
-                           $select = 'select';  
-                        }else { $select = ''; }
-                  }?>
-                  <a href="?route=order-products&category_id=<?= $cat->getId(); ?>" class="<?= $select ?>">
-                     <?= $cat->getName(); ?>
-                  </a>
-               </li>
-            <?php } ?>
-         </ul>
-      </nav>
-   </aside>
-   <section aria-labelledby="title-cat">
-      <?php 
-      $title_cat = 'Tous';
-      if($this->data['category_selected'] !== '') 
-      { 
-         $title_cat = $this->data['category_selected']->getName(); 
-         
-      } ?>
-      <h3 id="title-cat">dans <?= $title_cat ?></h3>
-      <div id="products">
-         <ul>
-            <?php foreach ($this->data['products'] as $product) { ?>
-               <li>
-                  <article class="product-card">
-                     <div>
-                        <img src="<?= $product->getImage(); ?>" alt="image de <?= $product->getName(); ?>">
-                        <h3><?= $product->getName(); ?></h3>
-                        <p class="">
-                           <?= $product->getDescription(); ?>
-                        </p>
-                        <b class="price">
-                           <?= $product->getPrice(); ?>
-                        </b>
-                     </div>
-                     <input type="submit" name="<?= $product->getName() ?>" id="<?= $product->getId(); ?>" value="Ajouter au panier">
-                  </article>
-               </li>
-            <?php } ?>
-         </ul>
-      </div>
-   </section>
+    <h2 id="title-products">Produits</h2>
+    <aside>
+        <h3>Catégories</h3>
+        <nav> <!-- choix de la catgorie de produit -->
+            <ul>
+                <li><a href="?route=order-products">Toutes</a></li>
+                <?php foreach ($this->data['categories'] as $cat) { ?>
+                    <li>
+                        <?php $select = '';
+                        if ($this->data['category_selected'] !== "") {
+                            if ($cat->getId() === $this->data['category_selected']) {
+                                $select = 'select';
+                            }else { $select = ''; }
+                        }?>
+                        <a href="?route=order-products&category_id=<?= $cat->getId(); ?>" class="<?= $select ?>">
+                            <?= $cat->getName(); ?>
+                        </a>
+                    </li>
+                <?php } ?>
+            </ul>
+        </nav>
+    </aside>
+    <section aria-labelledby="title-cat">
+        <?php
+        $title_cat = 'Tous';
+        if($this->data['category_selected'] !== '')
+        {
+            $title_cat = $this->data['category_selected']->getName();
 
-   
+        } ?>
+        <h3 id="title-cat">dans <?= $title_cat ?></h3>
+        <div id="products">
+            <ul>
+                <?php foreach ($this->data['products'] as $product) { ?>
+                    <li>
+                        <article class="product-card">
+                            <div>
+                                <img src="<?= $product->getImage(); ?>" alt="image de <?= $product->getName(); ?>">
+                                <h3><?= $product->getName(); ?></h3>
+                                <p class="">
+                                    <?= $product->getDescription(); ?>
+                                </p>
+                                <b class="price">
+                                    <?= $product->getPrice(); ?>
+                                </b>
+                            </div>
+                            <input type="submit" name="<?= $product->getName() ?>" id="<?= $product->getId(); ?>" value="Ajouter au panier">
+                        </article>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    </section>
+
+
 </section>

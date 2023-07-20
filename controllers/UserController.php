@@ -14,21 +14,13 @@ class UserController extends AbstractController
     {
         if (isset($_POST["email"], $_POST["password"])) {
             $user = $this->userManager->getUserByEmail($_POST["email"]);
-            if($user != null)
-            {
-                if (password_verify($_POST["password"], $user->getPassword())) {
-                    $_SESSION['user_id'] = $user->getId();
-                    header("Location:index.php?route=order-products");
-                } else {
-                    $allUsers = $this->userManager->getAllUsers();
-                    $this->render('user/login.phtml', ["users" => $allUsers]);
-                }
+            if (password_verify($_POST["password"], $user->getPassword())) {
+                $_SESSION['user_id'] = $user->getId();
+                header("Location:index.php?route=order-products");
+            } else {
+                $allUsers = $this->userManager->getAllUsers();
+                $this->render('user/login.phtml', ["users" => $allUsers]);
             }
-            else
-            {
-                $this->render('user/register.phtml', []);
-            }
-            
         } else {
             $allUsers = $this->userManager->getAllUsers();
             $this->render('user/login.phtml', ["users" => $allUsers]);
@@ -37,32 +29,30 @@ class UserController extends AbstractController
 
     public function register()
     {
-        if(isset($_POST["first_name"], $_POST["last_name"], $_POST["email"], $_POST["username"], $_POST["password"], $_POST["confirm-password"]))
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            if($_POST['password'] === $_POST['confirm-password']){
-                $pwd = $_POST['password'];
-                $email = $_POST['email'];
-                $username = $_POST['username'];
-                $first_name = $_POST['first_name'];
-                $last_name = $_POST['last_name'];
-                
-                $user = new User($username, $first_name, $last_name, $email, $pwd);
-                $this->userManager->insertUser($user);
-                
-                $this->render('user/login.phtml', []);
-            } 
-            else 
+            $formName = $_POST["formName"];
+            
+            if ($formName === "user-register")
             {
-                $this->render('user/register.phtml', []);
+                if ($_POST['password'] === $_POST['confirm-password']) {
+                    
+                    $pwd = $_POST['password'];
+                    $email = $_POST['email'];
+                    $username = $_POST['username'];
+                    
+                    $user = new User($username, $email, $pwd);
+                    $this->userManager->insertUser($user);
+                    
+                    header("Location:index.php?route=user-login");
+                } else {
+                    $this->render('user/register.phtml', []);
+                }
             }
-        }
-        else
-        {
+        } else {
             $this->render('user/register.phtml', []);
         }
     }
-    
-    
     public function logout(): void
     {
         if (isset($_SESSION['user_id'])) {
