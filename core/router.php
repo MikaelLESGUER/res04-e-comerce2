@@ -41,7 +41,7 @@ function checkRoute($route)
     }
     else if($route === "reset-mdp")
     {
-        $accountController->resetMDP();
+        $userController->resetMDP();
     }
     else{
         $userController->login();
